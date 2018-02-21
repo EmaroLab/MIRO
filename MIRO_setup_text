@@ -1,0 +1,169 @@
+##### ROS SETUP ON YOUR COMPUTER #####
+
+Considering that you have the ubuntu version 16.04, Please proceed as follows:
+
+NOTE:
+CPIT means Copy and Paste In Terminal
+Workstation means your computer
+Whereever you find <Put_Here_something> then replace it entirely with that something.
+Example: 
+	export MIRO_PATH_MDK=~/<Put_Here_NameOf_MDK_Directory_In_WorkStation>
+Then you can simply do:
+	export MIRO_PATH_MDK=~/mdk
+
+CRITICAL POINT:
+
+HARDWARE:
+While removing and inserting batteries in MIRO (recommended for your ease and also safety of the robot),
+please put the robot upside down in your lap [as can be seen in the image here - https://consequential.bitbucket.io/Technical_Platform_Body_shell.html].  
+please hold down the battery cover with one hand while using the screw driver in the other hand. 
+please do not use excessive strength when tightening the screw.
+
+Also keep in mind the following - https://consequential.bitbucket.io/Demonstrator_Commissioning_Before_You_Start.html
+
+When charging MIRO's batteries, note that a full charge can take 9.5 to 10 hours (If the left and right blue LED's are active on the charging box then it means that the batteries are charging)
+
+SOFTWARE:
+If,
+Intention is to use the simulation of MIRO in Gazebo & Ubuntu is running on a virtual machine
+then,
+For users of Virtual Machine. DO NOT enable 3D acceleration (In VM settings) for gazebo to work properly. 
+Else,
+No problem in using simulation of MIRO in Gazebo
+
+#########################################################################
+
+1. INSTALLATION of ROS Kinetic (MIRO needs ROS Kinetic) [Link for details if interested: http://wiki.ros.org/ROS/Tutorials/InstallingandConfiguringROSEnvironment]
+
+------> Check if your configration of ubuntu repositories are proper as shown in the screenshot (link below)
+
+http://gazebosim.org/tutorials?tut=ros_installing
+
+------> Setup your sources list (CPIT)
+
+sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+
+------> Setup your keys (CPIT)
+
+sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
+
+------> Update your debian package index (CPIT)
+
+sudo apt-get update
+
+------> Do full installation (CPIT)
+
+sudo apt-get install ros-kinetic-desktop-full
+
+------> Initialize ROSDep (first step) (CPIT)
+
+sudo rosdep init
+
+------> Initialize ROSDep (second step) (CPIT)
+
+rosdep update
+
+------> Environment setup (first step) (CPIT)
+
+echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
+
+------> Environment setup (second step) (CPIT)
+
+source ~/.bashrc
+
+------> Dependencies for building packages (CPIT)
+
+sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential
+
+------> Check if installed correctly (CPIT)
+
+rosversion ros
+
+2. Install gazebo_ros_pkgs (If interested in using simulation mode) (link below)
+
+http://gazebosim.org/tutorials?tut=ros_installing&cat=connect_ros
+
+3. Download the MIRO Developer kit and MIRO android app from here (link below)
+
+http://labs.consequentialrobotics.com/miro/mdk/
+
+------> Make a new directory called 'lib' in your 'home' directory
+------> Move the recently downloaded directory 'MDK-170906' to 'lib'
+------> Go to the mdk directory in lib .. From there
+------> Type this command in terminal (It creates a symlink) (CPIT)
+	
+	ln -s $PWD ~/mdk 
+
+4. Configuring the Workstation: Making your Workstation have a static IP
+
+------> In (Network Preferences/TCP-IP) of your computer, change (configure IPV4) to 'Manual' from 'DHCP'
+------> If using a virtual machine - go into VM's (Network)settings and select 'Bridged Adapter'
+------> Change IPV4 Address to 130.251.13.<select_any_number_between_87_and_94>
+------> In (Network Preferences/DNS) of your computer, add 130.251.1.4 and 8.8.8.8
+------> If using virtual machine, go into its network settings and select (attached to) as 'Bridged Adapter' 
+
+------> Inside terminal of Workstation type (CPIT) 
+	
+	sudo nano ~/.bashrc 
+
+------> Add the lines below and modify '<>' parts
+
+	# cofiguration
+	export MIRO_PATH_MDK=~/<Put_Here_NameOf_MDK_Directory_In_WorkStation>
+	export ROS_IP=<Put_Here_StaticIP_Of_WorkStation>
+	export ROS_MASTER_URI=http://localhost:11311
+
+	# make our custom messages available to ROS/python
+	export ROS_PACKAGE_PATH=$MIRO_PATH_MDK/share:$ROS_PACKAGE_PATH
+	export PYTHONPATH=$MIRO_PATH_MDK/share:$PYTHONPATH
+
+	# usual Gazebo setup
+	source /usr/share/gazebo/setup.sh
+
+	# announce MIRO resources to Gazebo
+	export GAZEBO_RESOURCE_PATH=$MIRO_PATH_MDK/share:${GAZEBO_RESOURCE_PATH}
+
+
+5. Lets bring MIRO to Life
+
+------> In a new terminal type (CPIT)
+
+	roscore 
+
+------> In a new terminal type (CPIT) 
+
+	ssh root@<Put_Here_IP_Of_MIRO_Found_In_Android_App>
+
+------> MIRO's SSH entry password is 
+	
+	MIROOpen1
+
+6. Configuring the MIRO, so that it can locate the ROS Master (your Workstation): Not nessasary to make static IP for MIRO. Simply, before connecting with MIRO using SSH, check MIRO's IP address in MIRO android app
+
+------> Inside terminal of MIRO type (CPIT)
+	
+	sudo nano ~/.profile 
+
+------> Find (Scroll down almost to the bottom of the above file which you opened in terminal) and modify '<>' parts of the ROS_IP located near the lines shown below
+	
+	#.. bla bla (line simply for your reference)
+	#.. bla bla (line simply for your reference)
+	#.. bla bla (line simply for your reference)
+	ROS_IP=<Put_Here_Static_IP_(OfYourWorkstation)_ForConnectingWith_ROS_Master> (the main line to modify)
+
+7. Testing if all is working (Be careful if MIRO is on the table, it is going to move during tests; it can fall)
+
+------> Run sample python code (link below)
+
+https://consequential.bitbucket.io/Developer_Examples_Python_Command-line_Client.html
+
+------> Run sample C++ code  (link below)
+
+https://consequential.bitbucket.io/Developer_Examples_C++_Command-line_Client.html
+
+------> Run Python GUI for Complete access to MIRO sensors and actuators (link below)
+
+https://consequential.bitbucket.io/Developer_Examples_Python_GUI_Client.html
+
+
+=============
