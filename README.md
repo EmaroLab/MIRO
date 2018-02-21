@@ -8,7 +8,7 @@ Possible Application Domains of MIRO: http://consequentialrobotics.com/domains/
 
 MIRO_setup_pdf: Holds shorter decription of MiRo Setup
 
-MIRO_setup_textfile: Holds detailed description of Setup
+MIRO_setup_text: Holds detailed description of Setup
 
 # NOTE:
 
