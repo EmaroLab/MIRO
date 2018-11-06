@@ -94,14 +94,6 @@ http://labs.consequentialrobotics.com/miro/mdk/
 	
 	ln -s $PWD ~/mdk 
 
-4. Configuring the Workstation: Making your Workstation have a static IP
-
-------> In (Network Preferences/TCP-IP) of your computer, change (configure IPV4) to 'Manual' from 'DHCP'
-------> If using a virtual machine - go into VM's (Network)settings and select 'Bridged Adapter'
-------> Change IPV4 Address to 130.251.13.<select_any_number_between_87_and_94>
-------> In (Network Preferences/DNS) of your computer, add 130.251.1.4 and 8.8.8.8
-------> If using virtual machine, go into its network settings and select (attached to) as 'Bridged Adapter' 
-
 ------> Inside terminal of Workstation type (CPIT) 
 	
 	sudo nano ~/.bashrc 
@@ -109,8 +101,8 @@ http://labs.consequentialrobotics.com/miro/mdk/
 ------> Add the lines below and modify '<>' parts
 
 	# cofiguration
-	export MIRO_PATH_MDK=~/<Put_Here_NameOf_MDK_Directory_In_WorkStation>
-	export ROS_IP=<Put_Here_StaticIP_Of_WorkStation>
+	export MIRO_PATH_MDK=~/mdk
+	export ROS_IP=<Put_Here_IP_Of_Your_WorkStation>
 	export ROS_MASTER_URI=http://localhost:11311
 
 	# make our custom messages available to ROS/python
@@ -138,18 +130,18 @@ http://labs.consequentialrobotics.com/miro/mdk/
 	
 	MIROOpen1
 
-6. Configuring the MIRO, so that it can locate the ROS Master (your Workstation): Not nessasary to make static IP for MIRO. Simply, before connecting with MIRO using SSH, check MIRO's IP address in MIRO android app
+6. Configuring the MIRO, so that it can locate the ROS Master (your Workstation): Not necessary to make static IP for MIRO. Simply, before connecting with MIRO using SSH, check MIRO's IP address in MIRO android app
 
 ------> Inside terminal of MIRO type (CPIT)
 	
 	sudo nano ~/.profile 
 
-------> Find (Scroll down almost to the bottom of the above file which you opened in terminal) and modify '<>' parts of the ROS_IP located near the lines shown below
+------> Change ROS_MASTER_IP as the IP address of your workstation. To check the IP address of your workstation open a new terminal window and  type in:
 	
 	#.. bla bla (line simply for your reference)
 	#.. bla bla (line simply for your reference)
 	#.. bla bla (line simply for your reference)
-	ROS_IP=<Put_Here_Static_IP_(OfYourWorkstation)_ForConnectingWith_ROS_Master> (the main line to modify)
+	ROS_MASTER_IP=<Put_Here_IP_(OfYourWorkstation)_ForConnectingWith_ROS_Master>
 
 7. Testing if all is working (Be careful if MIRO is on the table, it is going to move during tests; it can fall)
 
