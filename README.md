@@ -10,8 +10,6 @@ MIRO_setup_pdf: Holds shorter decription of MiRo Setup
 
 MIRO_setup_text: Holds detailed description of Setup
 
-# NOTE:
+## Contact for issues:
 
-Not necessary to make static IP for your workstation (laptop) while setting up connection with MiRo.
-
-[You may skip the static IP part, which is described in the setup files in this repository. Also you can skip the ROS and Gazebo installation part, if you already have it on your workstation]
+kareem.syed.yusha@dibris.unige.it 
