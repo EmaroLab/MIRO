@@ -12,7 +12,7 @@ Also in this repository, you can find:
 
 To download MiRo's mdk you can:
 1. go to the [official website](http://labs.consequentialrobotics.com/miro/mdk/), OR
-2. from the terminal do `git clone https://gitlab.com/yushakareem/miro_mdk.git` and then in the same directory extract by typing `tar xvzf mdk-180509.tgz`.
+2. from the terminal do `git clone https://gitlab.com/yushakareem/miro_mdk.git` and then in the same directory extract by typing `tar xvzf mdk-180509.tgz`
 
 ## Contact for issues:
 
