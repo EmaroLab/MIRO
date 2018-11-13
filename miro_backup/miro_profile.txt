@@ -1,0 +1,52 @@
+  GNU nano 2.2.5                 File: /home/root/.profile                                         
+
+################################################################
+# MIRO USER CONFIGURATION
+#
+# You may want to configure items in this section only, to begin
+# with, as indicated in the documentation.
+
+# uncomment these values to configure MIRO to run encapsulated
+# "on-board", so the ROS master runs here as do ROS nodes.
+#ROS_IP=127.0.0.1
+#ROS_MASTER_IP=localhost
+
+# if those values were not set, you can configure MIRO to use
+# an off-board ROS master, in this section.
+if [[ "$ROS_IP" == "" ]];
+then
+
+    	# before ROS servers & clients are started, the value ROS_IP
+        # must be set so that remote systems can find this node.
+        #
+        # if you leave ROS_IP blank, here, get_ROBOT_IP.sh can be
+        # used to set it dynamically as ROS nodes are being started
+        # (see run_bridge_ros.sh for an example).
+        #
+        # if you are using a static IP for your robot, you can as an
+        # alternative set ROS_IP, here, to that IP and then you do
+        # not need to run get_ROBOT_IP.sh when launching ROS nodes.
+        #ROS_IP=192.168.1.101
+        #
+        # IP address of ROS master is needed so we can find it when
+        # we start any ROS node locally. you should always set this
+        # value if we are not running the ROS master locally.
+        ROS_MASTER_IP=130.251.13.136
+fi
+
+# MIRO USER CONFIGURATION: END
+################################################################
+
+
+
+# MDK configuration
+export MIRO_PATH_MDK=/home/root/mdk
+export ROS_RELEASE=`cat $MIRO_PATH_MDK/config/ros_release`
+
+# add a couple o' things to PATH
+PATH=$PATH:/home/root/bin
+PATH=$PATH:/usr/share/miro/bin
+
+^G Get Help     ^O WriteOut     ^R Read File    ^Y Prev Page    ^K Cut Text     ^C Cur Pos
+^X Exit         ^J Justify	^W Where Is     ^V Next Page    ^U UnCut Text   ^T To Spell
+
